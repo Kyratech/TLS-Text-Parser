@@ -69,7 +69,7 @@ namespace TLS_Test
         }
 
         [TestMethod]
-        public void TLSDictionary_WithInvalidOutput_ReturnsZero()
+        public void Dictionary_WithInvalidOutput_ReturnsZero()
         {
             TLSDictionary dict = new TLSDictionary();
 
@@ -81,7 +81,7 @@ namespace TLS_Test
         }
 
         [TestMethod]
-        public void TLSDictionary_WithIncorrectSizeInput_ThrowsException()
+        public void Dictionary_WithIncorrectSizeInput_ThrowsException()
         {
             TLSDictionary dict = new TLSDictionary();
 
@@ -99,7 +99,7 @@ namespace TLS_Test
         }
 
         [TestMethod]
-        public void TLSDictionary_IncrementsCounts()
+        public void Dictionary_IncrementsCounts()
         {
             TLSDictionary dict = new TLSDictionary();
 
@@ -141,6 +141,65 @@ namespace TLS_Test
 
             Assert.AreEqual<int>(eightList.Count, 1);
             StringAssert.Equals(eightList[0], "oct");
+        }
+
+        [TestMethod]
+        public void TopN_WithTestInput_FindsTopN()
+        {
+            TLSTopN top5 = new TLSTopN(5);
+
+            top5.AddNew(new TLSSortedPair("Ten", 10));
+            top5.AddNew(new TLSSortedPair("Non", 9));
+            top5.AddNew(new TLSSortedPair("Oct", 8));
+            top5.AddNew(new TLSSortedPair("Hep", 7));
+            top5.AddNew(new TLSSortedPair("Hex", 6));
+            top5.AddNew(new TLSSortedPair("Qin", 5));
+            top5.AddNew(new TLSSortedPair("Qad", 4));
+
+            List<string> top5List = top5.GetTopN();
+
+            Assert.AreEqual<int>(top5List.Count, 5);
+            StringAssert.Contains(top5List[0], "Ten");
+            StringAssert.Contains(top5List[1], "Non");
+            StringAssert.Contains(top5List[2], "Oct");
+            StringAssert.Contains(top5List[3], "Hep");
+            StringAssert.Contains(top5List[4], "Hex");
+        }
+
+        [TestMethod]
+        public void TopN_WithSameFrequencyInput_FindsAplhabeticalN()
+        {
+            TLSTopN top5 = new TLSTopN(5);
+
+            top5.AddNew(new TLSSortedPair("zzz", 10));
+            top5.AddNew(new TLSSortedPair("sss", 10));
+            top5.AddNew(new TLSSortedPair("ccc", 10));
+            top5.AddNew(new TLSSortedPair("ddd", 10));
+            top5.AddNew(new TLSSortedPair("aaa", 10));
+            top5.AddNew(new TLSSortedPair("eee", 10));
+            top5.AddNew(new TLSSortedPair("fff", 10));
+            top5.AddNew(new TLSSortedPair("bbb", 10));
+
+            List<string> top5List = top5.GetTopN();
+
+            Assert.AreEqual<int>(5, top5List.Count);
+            StringAssert.Contains(top5List[0], "aaa");
+            StringAssert.Contains(top5List[1], "bbb");
+            StringAssert.Contains(top5List[2], "ccc");
+            StringAssert.Contains(top5List[3], "ddd");
+            StringAssert.Contains(top5List[4], "eee");
+        }
+
+        [TestMethod]
+        public void TopN_WithInsufficientInput_LimitsSizeOfList()
+        {
+            TLSTopN top5 = new TLSTopN(5);
+
+            top5.AddNew(new TLSSortedPair("Ten", 10));
+
+            List<string> top5List = top5.GetTopN();
+
+            Assert.AreEqual<int>(1, top5List.Count);
         }
     }
 }

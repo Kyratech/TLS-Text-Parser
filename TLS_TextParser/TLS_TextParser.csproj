@@ -47,6 +47,8 @@
     <Compile Include="TLSDictionary.cs" />
     <Compile Include="TLSParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TLSSortedPair.cs" />
+    <Compile Include="TLSTopN.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

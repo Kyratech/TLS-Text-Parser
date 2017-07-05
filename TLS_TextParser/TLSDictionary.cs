@@ -79,5 +79,18 @@ namespace TLS_TextParser
 
             return tlsList;
         }
+
+        public List<string> GetTopTLS(int n)
+        {
+            TLSTopN top10 = new TLSTopN(10);
+
+            foreach (KeyValuePair<string, int> kvp in dictionary)
+            {
+                TLSSortedPair pair = new TLSSortedPair(kvp);
+                top10.AddNew(pair);
+            }
+
+            return top10.GetTopN();
+        }
     }
 }

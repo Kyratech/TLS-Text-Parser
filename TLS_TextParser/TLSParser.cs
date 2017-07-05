@@ -19,11 +19,11 @@ namespace TLS_TextParser
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
             tlsParser.RunTLSCount();
 
-            List<string> tlsWith63Count = tlsParser.GetTLSWithCount(63);
+            List<string> top10 = tlsParser.GetTopN(10);
 
-            foreach(string tls in tlsWith63Count)
+            foreach (string tlsPair in top10)
             {
-                Console.WriteLine(tls + ", 63");
+                Console.WriteLine(tlsPair);
             }
         }
 
@@ -48,6 +48,11 @@ namespace TLS_TextParser
         public List<string> GetTLSWithCount(int count)
         {
             return tlsDictionary.GetTLSWithCount(count);
+        }
+
+        public List<string> GetTopN(int n)
+        {
+            return tlsDictionary.GetTopTLS(n);
         }
 
         public void RunTLSCount()
