@@ -43,5 +43,13 @@ namespace TLS_Test
             string firstLine = textReader.GetLines()[0];
             StringAssert.Equals(firstLine, "The Project Gutenberg EBook of Romeo and Juliet, by William Shakespeare");
         }
+
+        [TestMethod]
+        public void Parser_WithSourceFile_CountsTRA()
+        {
+            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            int traCount = tlsParser.RegexCount_tra();
+            Assert.AreEqual<int>(traCount, 63);
+        }
     }
 }
