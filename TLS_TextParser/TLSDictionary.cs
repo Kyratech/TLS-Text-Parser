@@ -19,23 +19,37 @@ namespace TLS_TextParser
 
         public void IncrementTLS(string tls)
         {
+            CheckTLSLength(tls);
+            CheckAndIncrementEntry(tls);
+        }
+
+        private void CheckTLSLength(string tls)
+        {
             if(tls.Length != 3)
             {
                 throw new ArgumentException(IncorrectLengthTLSMessage);
             }
+        }
 
+        private void CheckAndIncrementEntry(string tls)
+        {
             tls = tls.ToLower();
 
             if(dictionary.ContainsKey(tls))
             {
-                int newCount = dictionary[tls] + 1;
-                dictionary.Remove(tls);
-                dictionary.Add(tls, newCount);
+                IncrementEntry(tls);
             }
             else
             {
                 dictionary.Add(tls, 1);
             }
+        }
+
+        private void IncrementEntry(string tls)
+        {
+            int newCount = dictionary[tls] + 1;
+            dictionary.Remove(tls);
+            dictionary.Add(tls, newCount);
         }
 
         public int GetCount(string tls)

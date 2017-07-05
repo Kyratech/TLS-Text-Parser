@@ -18,7 +18,6 @@ namespace TLS_TextParser
         {
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
             tlsParser.RunTLSCount();
-            tlsParser.GetTLSCount("cal");
         }
 
         public TLSParser(String filePath)
@@ -41,17 +40,28 @@ namespace TLS_TextParser
 
         public void RunTLSCount()
         {
-            Regex tlsRegex = new Regex("[a-z]{3}", RegexOptions.IgnoreCase);
+            string tlsPattern = "[a-z]{3}";
+            Regex tlsRegex = new Regex(tlsPattern, RegexOptions.IgnoreCase);
 
+            CountTLSInInput(tlsRegex);
+        }
+
+        private void CountTLSInInput(Regex tlsRegex)
+        {
             string[] lines = textReader.GetLines();
             for(int line = 0; line < lines.Length; line++)
             {
-                Match match = tlsRegex.Match(lines[line]);
-                while(match.Success)
-                {
-                    tlsDictionary.IncrementTLS(match.Value);
-                    match = tlsRegex.Match(lines[line], match.Index + 1);
-                }
+                CountTLSInString(tlsRegex, lines[line]);
+            }
+        }
+
+        private void CountTLSInString(Regex tlsRegex, string line)
+        {
+            Match match = tlsRegex.Match(line);
+            while(match.Success)
+            {
+                tlsDictionary.IncrementTLS(match.Value);
+                match = tlsRegex.Match(line, match.Index + 1);
             }
         }
 
