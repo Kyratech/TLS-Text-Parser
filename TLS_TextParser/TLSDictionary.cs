@@ -15,6 +15,11 @@ namespace TLS_TextParser
         public TLSDictionary()
         {
             dictionary = new Dictionary<string, int>();
+
+            /*
+            var topTen = dictionary.OrderByDescending(entry => entry.Key).Take(10);
+            topTen.Where(entry => entry.Key == "abc").Select(entry => entry.Value);
+            */
         }
 
         public void IncrementTLS(string tls)

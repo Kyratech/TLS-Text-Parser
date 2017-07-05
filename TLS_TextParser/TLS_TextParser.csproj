@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TextReader.cs" />
     <Compile Include="TLSDictionary.cs" />
     <Compile Include="TLSParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

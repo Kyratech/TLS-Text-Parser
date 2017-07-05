@@ -38,14 +38,6 @@ namespace TLS_Test
         }
 
         [TestMethod]
-        public void Reader_WithSourceFile_FirstLineCorrect()
-        {
-            TextReader textReader = new TextReader("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
-            string firstLine = textReader.GetLines()[0];
-            StringAssert.Equals(firstLine, "The Project Gutenberg EBook of Romeo and Juliet, by William Shakespeare");
-        }
-
-        [TestMethod]
         public void Parser_WithSourceFile_CountsTRA()
         {
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
