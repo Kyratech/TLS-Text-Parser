@@ -14,5 +14,10 @@ namespace TLS_TextParser
         {
             lines = System.IO.File.ReadAllLines(filePath);
         }
+
+        public string[] GetLines()
+        {
+            return lines;
+        }
     }
 }
