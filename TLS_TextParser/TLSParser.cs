@@ -30,11 +30,9 @@ namespace TLS_TextParser
             }
         }
 
-        public int RegexCount_tra()
+        public int RegexCount(string pattern)
         {
             int counter = 0;
-
-            string pattern = "tra";
 
             string[] lines = textReader.GetLines();
             for(int line = 0; line < lines.Length; line++)

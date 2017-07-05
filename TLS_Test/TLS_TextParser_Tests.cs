@@ -48,7 +48,7 @@ namespace TLS_Test
         public void Parser_WithSourceFile_CountsTRA()
         {
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
-            int traCount = tlsParser.RegexCount_tra();
+            int traCount = tlsParser.RegexCount("tra");
             Assert.AreEqual<int>(traCount, 63);
         }
     }
