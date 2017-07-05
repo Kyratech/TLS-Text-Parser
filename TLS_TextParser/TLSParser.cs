@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace TLS_TextParser
 {
-    class Program
+    class TLSParser
     {
         static void Main(string[] args)
         {
+            
         }
     }
 }
