@@ -87,7 +87,7 @@ namespace TLS_TextParser
 
         public List<string> GetTopTLS(int n)
         {
-            TLSTopN top10 = new TLSTopN(10);
+            TLSTopN top10 = new TLSTopN(n);
 
             foreach (KeyValuePair<string, int> kvp in dictionary)
             {

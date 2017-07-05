@@ -18,7 +18,7 @@ namespace TLS_TextParser
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
             TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
 
-            List<string> top10 = tlsDictionary.GetTopTLS(10);
+            List<string> top10 = tlsDictionary.GetTopTLS(20);
 
             foreach (string tlsPair in top10)
             {

@@ -193,5 +193,26 @@ namespace TLS_Test
 
             Assert.AreEqual<int>(1, top5List.Count);
         }
+
+        /*
+         * In response to a bug where the dictionary
+         * always returned the top 10 results instead of n
+         */
+        [TestMethod]
+        public void Dictionary_TopN_CorrectNumberOfResults()
+        {
+            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
+
+            List<string> top0 = tlsDictionary.GetTopTLS(0);
+            List<string> top5 = tlsDictionary.GetTopTLS(5);
+            List<string> top10 = tlsDictionary.GetTopTLS(10);
+            List<string> top20 = tlsDictionary.GetTopTLS(20);
+
+            Assert.AreEqual<int>(0, top0.Count);
+            Assert.AreEqual<int>(5, top5.Count);
+            Assert.AreEqual<int>(10, top10.Count);
+            Assert.AreEqual<int>(20, top20.Count);
+        }
     }
 }
