@@ -39,12 +39,17 @@ namespace TLS_TextParser
             string[] lines = textReader.GetLines();
             for(int line = 0; line < lines.Length; line++)
             {
-                Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-                MatchCollection matches = regex.Matches(lines[line]);
-                counter += matches.Count;
+                counter += CountMatches(lines[line], pattern);
             }
 
             return counter;
+        }
+
+        public int CountMatches(string input, string pattern)
+        {
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            MatchCollection matches = regex.Matches(input);
+            return matches.Count;
         }
     }
 }
