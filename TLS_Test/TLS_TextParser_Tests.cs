@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TLS_TextParser;
+using System.Collections.Generic;
 
 namespace TLS_Test
 {
@@ -116,6 +117,30 @@ namespace TLS_Test
             Assert.AreEqual<int>(oneAAACount, 1);
             Assert.AreEqual<int>(twoAAACount, 2);
             Assert.AreEqual<int>(emptyBBBCount, 0);
+        }
+
+        [TestMethod]
+        public void Parser_FindsTLSWithCount()
+        {
+            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/test_file.txt");
+            tlsParser.RunTLSCount();
+
+            List<string> zeroList = tlsParser.GetTLSWithCount(0);
+            List<string> oneList = tlsParser.GetTLSWithCount(1);
+            List<string> twoList = tlsParser.GetTLSWithCount(2);
+            List<string> eightList = tlsParser.GetTLSWithCount(8);
+
+            Assert.AreEqual<int>(zeroList.Count, 0);
+
+            Assert.AreEqual<int>(oneList.Count, 1);
+            StringAssert.Equals(oneList[0], "one");
+
+            Assert.AreEqual<int>(twoList.Count, 2);
+            StringAssert.Equals(twoList[0], "two");
+            StringAssert.Equals(twoList[1], "dos");
+
+            Assert.AreEqual<int>(eightList.Count, 1);
+            StringAssert.Equals(eightList[0], "oct");
         }
     }
 }

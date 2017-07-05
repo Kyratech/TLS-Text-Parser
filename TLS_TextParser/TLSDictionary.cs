@@ -64,5 +64,20 @@ namespace TLS_TextParser
                 return 0;
             }
         }
+
+        public List<string> GetTLSWithCount(int count)
+        {
+            List<string> tlsList = new List<string>();
+
+            foreach(KeyValuePair<string, int> kvp in dictionary)
+            {
+                if(kvp.Value == count)
+                {
+                    tlsList.Add(kvp.Key);
+                }
+            }
+
+            return tlsList;
+        }
     }
 }
