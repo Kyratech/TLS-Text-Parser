@@ -49,11 +49,11 @@ namespace TLS_Test
         public void Parser_WithSourceFile_AddsToDictionary()
         {
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
-            tlsParser.RunTLSCount();
+            TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
 
-            int traCount = tlsParser.GetTLSCount("tra");
-            int preCount = tlsParser.GetTLSCount("pre");
-            int qqqCount = tlsParser.GetTLSCount("qqq");
+            int traCount = tlsDictionary.GetCount("tra");
+            int preCount = tlsDictionary.GetCount("pre");
+            int qqqCount = tlsDictionary.GetCount("qqq");
 
             Assert.AreEqual<int>(traCount, 63);
             Assert.AreEqual<int>(preCount, 63);
@@ -115,12 +115,12 @@ namespace TLS_Test
         public void Parser_FindsTLSWithCount()
         {
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/test_file.txt");
-            tlsParser.RunTLSCount();
+            TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
 
-            List<string> zeroList = tlsParser.GetTLSWithCount(0);
-            List<string> oneList = tlsParser.GetTLSWithCount(1);
-            List<string> twoList = tlsParser.GetTLSWithCount(2);
-            List<string> eightList = tlsParser.GetTLSWithCount(8);
+            List<string> zeroList = tlsDictionary.GetTLSWithCount(0);
+            List<string> oneList = tlsDictionary.GetTLSWithCount(1);
+            List<string> twoList = tlsDictionary.GetTLSWithCount(2);
+            List<string> eightList = tlsDictionary.GetTLSWithCount(8);
 
             Assert.AreEqual<int>(zeroList.Count, 0);
 

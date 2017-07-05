@@ -11,15 +11,14 @@ namespace TLS_TextParser
     {
         public const string InvalidFileMessage = "The provided file path is not a valid text file";
 
-        private TLSDictionary tlsDictionary;
         private string text;
 
         static void Main(string[] args)
         {
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
-            tlsParser.RunTLSCount();
+            TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
 
-            List<string> top10 = tlsParser.GetTopN(10);
+            List<string> top10 = tlsDictionary.GetTopTLS(10);
 
             foreach (string tlsPair in top10)
             {
@@ -32,7 +31,6 @@ namespace TLS_TextParser
             try
             {
                 text = System.IO.File.ReadAllText(filePath);
-                tlsDictionary = new TLSDictionary();
             }
             catch (System.IO.IOException ae)
             {
@@ -40,37 +38,21 @@ namespace TLS_TextParser
             }
         }
 
-        public int GetTLSCount(string tls)
+        public TLSDictionary PopulateTLSDictionary()
         {
-            return tlsDictionary.GetCount(tls);
-        }
+            TLSDictionary tlsDictionary = new TLSDictionary();
 
-        public List<string> GetTLSWithCount(int count)
-        {
-            return tlsDictionary.GetTLSWithCount(count);
-        }
-
-        public List<string> GetTopN(int n)
-        {
-            return tlsDictionary.GetTopTLS(n);
-        }
-
-        public void RunTLSCount()
-        {
             string tlsPattern = "[a-z]{3}";
             Regex tlsRegex = new Regex(tlsPattern, RegexOptions.IgnoreCase);
 
-            CountTLSInString(tlsRegex, text);
-        }
-
-        private void CountTLSInString(Regex tlsRegex, string input)
-        {
-            Match match = tlsRegex.Match(input);
+            Match match = tlsRegex.Match(text);
             while(match.Success)
             {
                 tlsDictionary.IncrementTLS(match.Value);
-                match = tlsRegex.Match(input, match.Index + 1);
+                match = tlsRegex.Match(text, match.Index + 1);
             }
+
+            return tlsDictionary;
         }
 
         public int RegexCount(string pattern)
