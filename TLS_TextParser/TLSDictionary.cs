@@ -8,6 +8,8 @@ namespace TLS_TextParser
 {
     public class TLSDictionary
     {
+        public const string IncorrectLengthTLSMessage = "Attempted to add a TLS of incorrect size";
+
         private Dictionary<string, int> dictionary;
 
         public TLSDictionary()
@@ -17,6 +19,11 @@ namespace TLS_TextParser
 
         public void IncrementTLS(string tls)
         {
+            if(tls.Length != 3)
+            {
+                throw new ArgumentException(IncorrectLengthTLSMessage);
+            }
+
             tls = tls.ToLower();
 
             if(dictionary.ContainsKey(tls))

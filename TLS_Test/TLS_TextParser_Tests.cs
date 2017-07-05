@@ -68,11 +68,33 @@ namespace TLS_Test
         }
 
         [TestMethod]
-        public void TLSDictionary_WithInvalidInput_ReturnsZero()
+        public void TLSDictionary_WithInvalidOutput_ReturnsZero()
         {
             TLSDictionary dict = new TLSDictionary();
+
+            int xxxCount = dict.GetCount("xxx");
             int invalidCount = dict.GetCount("Invalid");
+
+            Assert.AreEqual<int>(xxxCount, 0);
             Assert.AreEqual<int>(invalidCount, 0);
+        }
+
+        [TestMethod]
+        public void TLSDictionary_WithIncorrectSizeInput_ThrowsException()
+        {
+            TLSDictionary dict = new TLSDictionary();
+
+            try
+            {
+                dict.IncrementTLS("Invalid");
+            }
+            catch(ArgumentException ae)
+            {
+                StringAssert.Contains(ae.Message, TLSDictionary.IncorrectLengthTLSMessage);
+                return;
+            }
+
+            Assert.Fail("No Argument Exception was thrown");
         }
 
         [TestMethod]

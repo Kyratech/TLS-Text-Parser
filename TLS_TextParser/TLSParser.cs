@@ -18,6 +18,7 @@ namespace TLS_TextParser
         {
             TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
             tlsParser.RunTLSCount();
+            tlsParser.GetTLSCount("cal");
         }
 
         public TLSParser(String filePath)
