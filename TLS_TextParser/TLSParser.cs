@@ -12,10 +12,12 @@ namespace TLS_TextParser
         public const string InvalidFileMessage = "The provided file path is not a valid text file";
 
         private TextReader textReader;
+        private TLSDictionary tlsDictionary;
 
         static void Main(string[] args)
         {
-
+            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            tlsParser.RunTLSCount();
         }
 
         public TLSParser(String filePath)
@@ -23,10 +25,32 @@ namespace TLS_TextParser
             try
             {
                 textReader = new TextReader(filePath);
+                tlsDictionary = new TLSDictionary();
             }
             catch (System.IO.IOException ae)
             {
                 throw new ArgumentException(InvalidFileMessage, ae);
+            }
+        }
+
+        public int GetTLSCount(string tls)
+        {
+            return tlsDictionary.GetCount(tls);
+        }
+
+        public void RunTLSCount()
+        {
+            Regex tlsRegex = new Regex("[a-z]{3}", RegexOptions.IgnoreCase);
+
+            string[] lines = textReader.GetLines();
+            for(int line = 0; line < lines.Length; line++)
+            {
+                Match match = tlsRegex.Match(lines[line]);
+                while(match.Success)
+                {
+                    tlsDictionary.IncrementTLS(match.Value);
+                    match = tlsRegex.Match(lines[line], match.Index + 1);
+                }
             }
         }
 
@@ -43,7 +67,7 @@ namespace TLS_TextParser
             return counter;
         }
 
-        public int CountMatches(string input, string pattern)
+        private int CountMatches(string input, string pattern)
         {
             Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
             MatchCollection matches = regex.Matches(input);
