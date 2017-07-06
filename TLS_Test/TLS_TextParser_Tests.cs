@@ -224,6 +224,8 @@ namespace TLS_Test
             List<string> results = tlsDictionary.GetTopTLS(2);
 
             Assert.AreEqual<int>(2, results.Count);
+            StringAssert.Contains(results[0], "abc");
+            StringAssert.Contains(results[1], "bcd");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TLS_TextParser
 {
     public class TLSDictionary
     {
-        public const string IncorrectLengthTLSMessage = "Attempted to add a TLS of incorrect size";
+        public const string IncorrectLengthTLSMessage = "Attempted to add a TLS of incorrect size: ";
 
         private Dictionary<string, int> dictionary;
 
@@ -32,7 +32,7 @@ namespace TLS_TextParser
         {
             if(tls.Length != 3)
             {
-                throw new ArgumentException(IncorrectLengthTLSMessage);
+                throw new ArgumentException(IncorrectLengthTLSMessage + tls + " is not a TLS.");
             }
         }
 

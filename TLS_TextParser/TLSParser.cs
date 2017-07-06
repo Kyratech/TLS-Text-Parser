@@ -15,7 +15,7 @@ namespace TLS_TextParser
 
         static void Main(string[] args)
         {
-            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/gap_test_file.txt");
+            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
             TLSDictionary tlsDictionary = tlsParser.PopulateTLSWithGapsDictionary();
 
             List<string> top10 = tlsDictionary.GetTopTLS(20);
@@ -46,7 +46,7 @@ namespace TLS_TextParser
             string letterExtractorPattern = "[^a-z]";
 
             Regex tlsRegex = new Regex(tlsGapPattern, RegexOptions.IgnoreCase);
-            Regex letterExtractorRegex = new Regex(letterExtractorPattern);
+            Regex letterExtractorRegex = new Regex(letterExtractorPattern, RegexOptions.IgnoreCase);
 
             Match match = tlsRegex.Match(text);
             while (match.Success)
