@@ -15,8 +15,8 @@ namespace TLS_TextParser
 
         static void Main(string[] args)
         {
-            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
-            TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
+            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/gap_test_file.txt");
+            TLSDictionary tlsDictionary = tlsParser.PopulateTLSWithGapsDictionary();
 
             List<string> top10 = tlsDictionary.GetTopTLS(20);
 
@@ -36,6 +36,27 @@ namespace TLS_TextParser
             {
                 throw new ArgumentException(InvalidFileMessage, ae);
             }
+        }
+
+        public TLSDictionary PopulateTLSWithGapsDictionary()
+        {
+            TLSDictionary tlsDictionary = new TLSDictionary();
+
+            string tlsGapPattern = "[a-z][^a-z]*[a-z][^a-z]*[a-z]";
+            string letterExtractorPattern = "[^a-z]";
+
+            Regex tlsRegex = new Regex(tlsGapPattern, RegexOptions.IgnoreCase);
+            Regex letterExtractorRegex = new Regex(letterExtractorPattern);
+
+            Match match = tlsRegex.Match(text);
+            while (match.Success)
+            {
+                string tlsOnly = letterExtractorRegex.Replace(match.Value, "");
+                tlsDictionary.IncrementTLS(tlsOnly);
+                match = tlsRegex.Match(text, match.Index + 1);
+            }
+
+            return tlsDictionary;
         }
 
         public TLSDictionary PopulateTLSDictionary()

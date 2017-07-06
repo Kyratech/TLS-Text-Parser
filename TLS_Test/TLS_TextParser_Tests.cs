@@ -196,7 +196,7 @@ namespace TLS_Test
 
         /*
          * In response to a bug where the dictionary
-         * always returned the top 10 results instead of n
+         * always returned the top 10 results instead of top n results
          */
         [TestMethod]
         public void Dictionary_TopN_CorrectNumberOfResults()
@@ -213,6 +213,17 @@ namespace TLS_Test
             Assert.AreEqual<int>(5, top5.Count);
             Assert.AreEqual<int>(10, top10.Count);
             Assert.AreEqual<int>(20, top20.Count);
+        }
+
+        [TestMethod]
+        public void Parser_TLSWithGaps_IncludesGaps()
+        {
+            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/gap_test_file.txt");
+            TLSDictionary tlsDictionary = tlsParser.PopulateTLSWithGapsDictionary();
+
+            List<string> results = tlsDictionary.GetTopTLS(2);
+
+            Assert.AreEqual<int>(2, results.Count);
         }
     }
 }
