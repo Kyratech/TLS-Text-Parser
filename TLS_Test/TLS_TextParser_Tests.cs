@@ -13,7 +13,8 @@ namespace TLS_Test
         {
             try
             {
-                TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+                InputReader fileReader = new FileReader("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+                TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
             }
             catch(Exception e)
             {
@@ -26,11 +27,44 @@ namespace TLS_Test
         {
             try
             {
-                TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/invalid_file.txt");
+                InputReader fileReader = new FileReader("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/invalid_file.txt");
+                TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
             }
             catch(ArgumentException ae)
             {
-                StringAssert.Contains(ae.Message, TLSParser.InvalidFileMessage);
+                StringAssert.Contains(ae.Message, FileReader.InvalidFileMessage);
+                return;
+            }
+
+            Assert.Fail("No Argument Exception was thrown");
+        }
+
+        [TestMethod]
+        public void Parser_WithValidWebsite_NoErrors()
+        {
+            try
+            {
+                InputReader fileReader = new WebReader("https://en.wikipedia.org/wiki/C");
+                TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("Expected no exception, but got: " + e.Message);
+            }
+        }
+
+        [TestMethod]
+
+        public void Parser_WithInvalidWebsite_ThrowsArgumentException()
+        {
+            try
+            {
+                InputReader fileReader = new WebReader("invalidaddress.invalidsuffix");
+                TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
+            }
+            catch (ArgumentException ae)
+            {
+                StringAssert.Contains(ae.Message, WebReader.InvalidAddressMessage);
                 return;
             }
 
@@ -40,7 +74,8 @@ namespace TLS_Test
         [TestMethod]
         public void Parser_WithSourceFile_CountsTRA()
         {
-            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            InputReader fileReader = new FileReader("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
             int traCount = tlsParser.RegexCount("tra");
             Assert.AreEqual<int>(traCount, 63);
         }
@@ -48,7 +83,8 @@ namespace TLS_Test
         [TestMethod]
         public void Parser_WithSourceFile_AddsToDictionary()
         {
-            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            InputReader fileReader = new FileReader("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
             TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
 
             int traCount = tlsDictionary.GetCount("tra");
@@ -114,7 +150,8 @@ namespace TLS_Test
         [TestMethod]
         public void Parser_FindsTLSWithCount()
         {
-            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/test_file.txt");
+            InputReader fileReader = new FileReader("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/test_file.txt");
+            TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
             TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
 
             List<string> zeroList = tlsDictionary.GetTLSWithCount(0);
@@ -201,7 +238,8 @@ namespace TLS_Test
         [TestMethod]
         public void Dictionary_TopN_CorrectNumberOfResults()
         {
-            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            InputReader fileReader = new FileReader("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
             TLSDictionary tlsDictionary = tlsParser.PopulateTLSDictionary();
 
             List<string> top0 = tlsDictionary.GetTopTLS(0);
@@ -218,7 +256,7 @@ namespace TLS_Test
         [TestMethod]
         public void Parser_TLSWithGaps_IncludesGaps()
         {
-            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/gap_test_file.txt");
+            TLSParser tlsParser = new TLSParser("a B C d");
             TLSDictionary tlsDictionary = tlsParser.PopulateTLSWithGapsDictionary();
 
             List<string> results = tlsDictionary.GetTopTLS(2);

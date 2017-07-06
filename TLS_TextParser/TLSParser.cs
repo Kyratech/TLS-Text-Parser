@@ -9,13 +9,12 @@ namespace TLS_TextParser
 {
     public class TLSParser
     {
-        public const string InvalidFileMessage = "The provided file path is not a valid text file";
-
         private string text;
 
         static void Main(string[] args)
         {
-            TLSParser tlsParser = new TLSParser("C:/Work/Training/TLS_TextParser/TLS_TextParser/text/source_file.txt");
+            InputReader fileReader = new WebReader("https://en.wikipedia.org/wiki/C");
+            TLSParser tlsParser = new TLSParser(fileReader.ReadInput());
             TLSDictionary tlsDictionary = tlsParser.PopulateTLSWithGapsDictionary();
 
             List<string> top10 = tlsDictionary.GetTopTLS(20);
@@ -26,16 +25,9 @@ namespace TLS_TextParser
             }
         }
 
-        public TLSParser(String filePath)
+        public TLSParser(String input)
         {
-            try
-            {
-                text = System.IO.File.ReadAllText(filePath);
-            }
-            catch (System.IO.IOException ae)
-            {
-                throw new ArgumentException(InvalidFileMessage, ae);
-            }
+            text = input;
         }
 
         public TLSDictionary PopulateTLSWithGapsDictionary()
